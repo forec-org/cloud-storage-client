@@ -1,0 +1,12 @@
+INPUT(
+./debug\main.o
+./debug\MyMainWindow.o
+./debug\MyTitleBar.o
+./debug\MyToolBar.o
+./debug\MyToolButton.o
+./debug\mainwindow.o
+./debug\moc_MyTitleBar.o
+./debug\moc_MyToolBar.o
+./debug\moc_MyToolButton.o
+./debug\moc_mainwindow.o
+);

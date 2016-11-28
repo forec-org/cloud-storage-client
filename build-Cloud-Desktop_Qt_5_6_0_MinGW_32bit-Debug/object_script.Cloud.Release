@@ -1,0 +1,12 @@
+INPUT(
+./release\main.o
+./release\MyMainWindow.o
+./release\MyTitleBar.o
+./release\MyToolBar.o
+./release\MyToolButton.o
+./release\mainwindow.o
+./release\moc_MyTitleBar.o
+./release\moc_MyToolBar.o
+./release\moc_MyToolButton.o
+./release\moc_mainwindow.o
+);

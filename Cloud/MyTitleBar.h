@@ -19,7 +19,12 @@ private:
     QPushButton *lpMinimizeButton;
     QPushButton *lpMaximizeButton;
     QPushButton *lpCloseButton;
+    QWidget *parent;
 
+protected slots:
+    void closeWindow();
+    void minimumWindow();
+    void maximumWindow();
 };
 
 #endif // MYTITLEBAR_H

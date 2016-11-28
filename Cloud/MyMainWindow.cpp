@@ -1,4 +1,4 @@
-#include "MyMainWindow.h"
+﻿#include "MyMainWindow.h"
 #include "MyTitleBar.h"
 #include "MyToolButton.h"
 #include <QPainter>
@@ -11,15 +11,7 @@ MyMainWindow::MyMainWindow()
     //------------------------------------
     //  设置组件代码
     //------------------------------------
-    setStyleSheet( "QPushButton{background-color: rgb(220, 220, 220);"
-                   "color: rgb(0, 0, 0);"
-                   "border-style: outset;"
-                   "border-width: 1px;"
-                   "border-color: beige;"
-                   "font: bold 14px;"
-                   "padding: 6px;"
-                   "text-align: center;}"
-                   "QPushButton:hover{background-color: rgb(240, 240, 240)}");
+        
     //布局
     lpMainLayout = new QVBoxLayout(this);
     lpSwitchLayout = new QHBoxLayout(this);
@@ -111,5 +103,14 @@ void MyMainWindow::mouseReleaseEvent(QMouseEvent *e){
 
 void MyMainWindow::setWidgetStyle()
 {
-
+    lpDownloadButton->setStyleSheet(   "QPushButton{background-color: rgb(220, 220, 220);"
+                                       "color: rgb(0, 0, 0);"
+                                       "border-style: outset;"
+                                       "border-width: 1px;"
+                                       "border-color: beige;"
+                                       "font: bold 14px;"
+                                       "padding: 6px;"
+                                       "text-align: center;}"
+                                       "QPushButton:hover{background-color: rgb(240, 240, 240)}");
+    
 }

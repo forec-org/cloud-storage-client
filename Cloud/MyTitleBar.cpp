@@ -8,7 +8,7 @@
 #include <QApplication>
 
 MyTitleBar::MyTitleBar(QWidget *parent)
-    :QWidget(parent)
+    :QWidget(parent),parent(parent)
 {
     setFixedHeight(30);
 
@@ -48,11 +48,19 @@ MyTitleBar::MyTitleBar(QWidget *parent)
 
     setLayout(pLayout);
 
-    connect(lpMinimizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
-    connect(lpMaximizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
-    connect(lpCloseButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
+    connect(lpMinimizeButton, SIGNAL(clicked(bool)), this, SLOT(minimumWindow()));
+    connect(lpMaximizeButton, SIGNAL(clicked(bool)), this, SLOT(maxinumWindow()));
+    connect(lpCloseButton, SIGNAL(clicked(bool)), this, SLOT(closeWindow()));
 }
 
+void MyTitleBar::closeWindow(){
+    parent->close();
+}
 
+void MyTitleBar::minimumWindow(){
+    parent->setWindowState(Qt::WindowMinimized);
+}
 
-
+void MyTitleBar::maximumWindow(){
+    parent->setWindowState(Qt::WindowMaximized);
+}

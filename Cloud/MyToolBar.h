@@ -21,6 +21,7 @@ private:
 signals:
 
 public slots:
+
 };
 
 #endif // MYTOOLBAR_H

@@ -15,15 +15,23 @@ TEMPLATE = app
 SOURCES += main.cpp\
     MyMainWindow.cpp \
     MyTitleBar.cpp \
-    MyToolBar.cpp \
-    MyToolButton.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    MyNetFileBrowser/MyNetFileBrowser.cpp \
+    MyToolBar/MyToolBar.cpp \
+    MyMenuBar/MyMenuBar.cpp \
+    MyMenuBar/MyToolButton.cpp \
+    MyMenuBar/MyUserLabel.cpp
 
 HEADERS  += \
     MyMainWindow.h \
     MyTitleBar.h \
-    MyToolBar.h \
-    MyToolButton.h \
-    mainwindow.h
+    mainwindow.h \
+    MyNetFileBrowser/MyNetFileBrowser.h \
+    MyToolBar/MyToolBar.h \
+    MyMenuBar/MyMenuBar.h \
+    MyMenuBar/MyToolButton.h \
+    MyMenuBar/MyUserLabel.h
 
 FORMS    += mainwindow.ui
+
+win32:CONFIG += console

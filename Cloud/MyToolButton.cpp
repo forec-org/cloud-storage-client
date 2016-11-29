@@ -31,10 +31,10 @@ void MyToolButton::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     if(press){
-        painterinfo(150, 200, &painter);
+        painterinfo(255, 255, &painter);
     }
     else if(over){
-        painterinfo(50, 100, &painter);
+        painterinfo(255, 255, &painter);
     }
     QToolButton::paintEvent(event);
 }

@@ -8,13 +8,12 @@ MyMenuBar::MyMenuBar(QWidget *parent) : QWidget(parent)
     createWidget();
     createLayout();
     setSlotConnect();
+
+//    connect(lpMainWindowButton, SIGNAL(clicked(bool)), this, SLOT(test_()));
 }
 
 void MyMenuBar::createWidget()
 {
-//    lpUserInfo = new QLabel("用户信息", this);
-//    lpUserInfo->setAlignment(Qt::AlignCenter);
-//    lpUserInfo->setFixedSize(300, 120);
     lpUserInfo = new MyUserLabel(this);
 
     lpMainWindowButton = new MyToolButton("image/menu/cloud.png", "myCloud", this);
@@ -59,24 +58,24 @@ void MyMenuBar::setSlotConnect()
 void MyMenuBar::ResponseSlot(MyToolButton *b)
 {
     if(b == lpMainWindowButton){
-//        qDebug() << "main pushed" << endl;
         lpDownloadButton->SetPress(false);
         lpDownloadButton->update();
         lpUploadButton->SetPress(false);
         lpUploadButton->update();
+        emit SwitchPage(0);
     }
     else if(b == lpDownloadButton){
-//        qDebug() << "down pushed" << endl;
         lpMainWindowButton->SetPress(false);
         lpMainWindowButton->update();
         lpUploadButton->SetPress(false);
         lpUploadButton->update();
+        emit SwitchPage(1);
     }
     else if(b == lpUploadButton){
-//        qDebug() << "main pushed" << endl;
         lpMainWindowButton->SetPress(false);
         lpMainWindowButton->update();
         lpDownloadButton->SetPress(false);
         lpDownloadButton->update();
+        emit SwitchPage(2);
     }
 }

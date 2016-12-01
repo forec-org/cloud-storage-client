@@ -11,19 +11,7 @@ MyToolBar::MyToolBar(QWidget *parent) : QWidget(parent)
     setButtonStyle();
     setSlotConnect();
 }
-/*
-void MyToolBar::paintEvent(QPaintEvent *e)
-{
-    qDebug() << "长：" << size().width() << "宽" << size().height() << endl;
-    QBitmap bitmap(size());
-    QPainter painter(&bitmap);
 
-    painter.fillRect(rect(), Qt::white);
-    painter.setBrush(QColor(0, 0, 0));
-    painter.drawRoundedRect(this->rect(), 0, 0);
-    setMask(bitmap);
-}
-*/
 void MyToolBar::setSlotConnect()
 {
     connect(lpDownload, SIGNAL(clicked(bool)), this, SLOT(clickedDownload()));

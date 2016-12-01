@@ -21,7 +21,6 @@ private:
     void setSlotConnect();
 
 private:
-//    QLabel* lpUserInfo;
     MyUserLabel* lpUserInfo;
     MyToolButton* lpMainWindowButton;
     MyToolButton* lpDownloadButton;
@@ -29,9 +28,7 @@ private:
 
     QHBoxLayout* lpSwitchLayout;
 signals:
-    void ToMainWindow();
-    void ToDownloadWindow();
-    void ToUploadWindow();
+    void SwitchPage(int);
 
 public slots:
     void ResponseSlot(MyToolButton*);

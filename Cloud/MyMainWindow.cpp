@@ -2,7 +2,9 @@
 #include "MyTitleBar.h"
 #include "MyToolBar/MyToolBar.h"
 #include "MyMenuBar/MyMenuBar.h"
-#include "MyToolButton.h"
+#include "MyPage/MyPage.h"
+
+//#include "MyToolButton.h"
 #include <QPainter>
 #include <QBitmap>
 #include <fstream>
@@ -11,39 +13,17 @@
 MyMainWindow::MyMainWindow()
     :QFrame()
 {
-    setWindowFlags(Qt::FramelessWindowHint);
-    //------------------------------------
-    //  设置组件代码
-    //------------------------------------
+    isMoving = false;
 
-    //布局
-    lpMainLayout = new QVBoxLayout(this);
-    lpMainLayout->setMargin(2);
-    lpMainLayout->setSpacing(0);
     //控件
-    lpTitleBar = new MyTitleBar(this);
-    lpToolBar = new MyToolBar(this);
-    lpMenuBar = new MyMenuBar(this);
+    InitWidget();
+    //布局
+    InitLayout();
 
-    lpExplorer = new QLabel("资源管理器界面", this);
-    lpExplorer->setAlignment(Qt::AlignCenter);
-    lpExplorer->setMinimumSize(950, 450);
-    lpExplorer->setStyleSheet("QLabel{background:white;}");
-
-    lpMainLayout->addWidget(lpTitleBar);
-    lpMainLayout->addWidget(lpMenuBar);
-    lpMainLayout->addWidget(lpToolBar);
-    lpMainLayout->addWidget(lpExplorer);
-    this->setLayout(lpMainLayout);
     //------------------------------------
     //  设置样式
     //------------------------------------
-    QPalette bgpal = palette();
-    bgpal.setColor(QPalette::Background, QColor(14, 142, 231));
-    setPalette(bgpal);
-
-    setMinimumWidth(950);
-    setMinimumHeight(600);
+    setThisStyle();
 
     InitSlot();
 }
@@ -61,15 +41,13 @@ void MyMainWindow::paintEvent(QPaintEvent *event)
 
 void MyMainWindow::mousePressEvent(QMouseEvent *e){
     if(e->y() <= 22){
-        //        qDebug() << "1" << endl;
+        isMoving = true;
         last = e->globalPos();
     }
 }
 
 void MyMainWindow::mouseMoveEvent(QMouseEvent *e){
-//    qDebug() << "x:" << e->globalX() << " y:" <<e->globalY() << endl;
-    if(e->y() <= 22){
-//        qDebug() << "2" << endl;
+    if(isMoving == true){
         int dx = e->globalX() - last.x();
         int dy = e->globalY() - last.y();
         last = e->globalPos();
@@ -78,13 +56,32 @@ void MyMainWindow::mouseMoveEvent(QMouseEvent *e){
 }
 
 void MyMainWindow::mouseReleaseEvent(QMouseEvent *e){
-    if(e->y() <= 22){
-//        qDebug() << "3" << endl;
+    if(e->y() <= 30){
         int dx = e->globalX() - last.x();
         int dy = e->globalY() - last.y();
         move(x()+dx, y()+dy);
+        isMoving = false;
     }
+}
 
+void MyMainWindow::InitWidget()
+{
+    lpTitleBar = new MyTitleBar(this);
+    lpToolBar = new MyToolBar(this);
+    lpMenuBar = new MyMenuBar(this);
+    lpPage = new MyPage(this);
+}
+
+void MyMainWindow::InitLayout()
+{
+    lpMainLayout = new QVBoxLayout(this);
+    lpMainLayout->setMargin(2);
+    lpMainLayout->setSpacing(0);
+    lpMainLayout->addWidget(lpTitleBar);
+    lpMainLayout->addWidget(lpMenuBar);
+    lpMainLayout->addWidget(lpToolBar);
+    lpMainLayout->addWidget(lpPage);
+    this->setLayout(lpMainLayout);
 }
 
 void MyMainWindow::InitSlot()
@@ -94,10 +91,22 @@ void MyMainWindow::InitSlot()
     connect(lpToolBar, SIGNAL(Share()), this, SLOT(shareFile()));
     connect(lpToolBar, SIGNAL(Delete()), this, SLOT(deleteFile()));
     connect(lpToolBar, SIGNAL(NewDir()), this, SLOT(makeNewDir()));
+    connect(lpMenuBar, SIGNAL(SwitchPage(int)), lpPage, SLOT(SetCurrentPage(int)));
 }
 
 void MyMainWindow::setWidgetStyle()
 {
+}
+
+void MyMainWindow::setThisStyle()
+{
+    QPalette bgpal = palette();
+    bgpal.setColor(QPalette::Background, QColor(14, 142, 231));
+    setPalette(bgpal);
+
+    setMinimumWidth(950);
+    setMinimumHeight(600);
+    setWindowFlags(Qt::FramelessWindowHint);
 }
 
 void MyMainWindow::startDownloadMission()

@@ -9,7 +9,7 @@
 #include <QLabel>
 
 class MyTitleBar;
-class MyToolBar;
+//class MyToolBar;
 //class MyToolButton;
 class MyMenuBar;
 class MyPage;
@@ -46,27 +46,24 @@ private:
     MyTitleBar* lpTitleBar;
     //界面切换按钮
     MyMenuBar* lpMenuBar;
-    //文件操作栏
-    MyToolBar* lpToolBar;
     //显示窗口: 文件浏览界面，下载管理界面， 上传管理界面
     MyPage* lpPage;
-
-//    QLabel* lpExplorer;
 
     QPoint last;
 
     bool isMoving;
 
 private slots:
-    void startDownloadMission();
-
-    void startUploadMission();
-
-    void shareFile();
-
-    void deleteFile();
-
-    void makeNewDir();
+    //调用controller的函数向服务器发送命令
+    void startDownloadMission(QString);
+    void startUploadMission(QString);
+    void shareFile(QString);
+    void deleteFile(QString);
+    void makeNewDir(QString);
+    void toUpperDir();
+    void toBeforeDir();
+    void refreshDir();
+    void searchFile(QString);
 
 };
 

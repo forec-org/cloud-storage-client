@@ -7,8 +7,7 @@
 #include <QVBoxLayout>
 
 class MyFileBrowserPage;
-class MyDownloadPage;
-class MyUploadPage;
+class MyMissionPage;
 
 class MyPage : public QWidget
 {
@@ -21,18 +20,41 @@ private:
 
     void InitLayOut();
 
+    void ConnectSlot();
+
 private:
     QStackedLayout* lpStackLayout;
     QVBoxLayout* lpMainLayout;
 
     MyFileBrowserPage* lpFileBrowser;
-    MyDownloadPage* lpDownload;
-    MyUploadPage* lpUpload;
+    MyMissionPage* lpDownload;
+    MyMissionPage* lpUpload;
 
 signals:
+    void Download(QString);
+    void Upload(QString);
+    void Share(QString);
+    void Delete(QString);
+    void NewDir(QString);
+    void Back();
+    void Front();
+    void Refresh();
+    void Search(QString);
 
 public slots:
     void SetCurrentPage(int);
+
+private slots:
+    //接收来自文件浏览器页面的信号,并传递给主窗口
+    void sendDownloadSignal(QString);
+    void sendUploadSignal(QString);
+    void sendShareSignal(QString);
+    void sendDeleteSignal(QString);
+    void sendNewDirSignal(QString);
+    void sendBackSignal();
+    void sendFrontSignal();
+    void sendRefreshSignal();
+    void sendSearchSignal(QString);
 };
 
 #endif // MYPAGE_H

@@ -1,6 +1,6 @@
 #include "MyMainWindow.h"
 #include "MyTitleBar.h"
-#include "MyToolBar/MyToolBar.h"
+//#include "MyToolBar/MyToolBar.h"
 #include "MyMenuBar/MyMenuBar.h"
 #include "MyPage/MyPage.h"
 
@@ -67,7 +67,6 @@ void MyMainWindow::mouseReleaseEvent(QMouseEvent *e){
 void MyMainWindow::InitWidget()
 {
     lpTitleBar = new MyTitleBar(this);
-    lpToolBar = new MyToolBar(this);
     lpMenuBar = new MyMenuBar(this);
     lpPage = new MyPage(this);
 }
@@ -79,19 +78,24 @@ void MyMainWindow::InitLayout()
     lpMainLayout->setSpacing(0);
     lpMainLayout->addWidget(lpTitleBar);
     lpMainLayout->addWidget(lpMenuBar);
-    lpMainLayout->addWidget(lpToolBar);
     lpMainLayout->addWidget(lpPage);
     this->setLayout(lpMainLayout);
 }
 
 void MyMainWindow::InitSlot()
 {
-    connect(lpToolBar, SIGNAL(Upload()), this, SLOT(startUploadMission()));
-    connect(lpToolBar, SIGNAL(Download()), this, SLOT(startDownloadMission()));
-    connect(lpToolBar, SIGNAL(Share()), this, SLOT(shareFile()));
-    connect(lpToolBar, SIGNAL(Delete()), this, SLOT(deleteFile()));
-    connect(lpToolBar, SIGNAL(NewDir()), this, SLOT(makeNewDir()));
     connect(lpMenuBar, SIGNAL(SwitchPage(int)), lpPage, SLOT(SetCurrentPage(int)));
+
+    connect(lpPage, SIGNAL(Download(QString)), this, SLOT(startDownloadMission(QString)));
+    connect(lpPage, SIGNAL(Upload(QString)), this, SLOT(startUploadMission(QString)));
+    connect(lpPage, SIGNAL(Share(QString)), this, SLOT(shareFile(QString)));
+    connect(lpPage, SIGNAL(Delete(QString)), this, SLOT(deleteFile(QString)));
+    connect(lpPage, SIGNAL(NewDir(QString)), this, SLOT(makeNewDir(QString)));
+
+    connect(lpPage, SIGNAL(Back()), this, SLOT(toUpperDir()));
+    connect(lpPage, SIGNAL(Front()), this, SLOT(toBeforeDir()));
+    connect(lpPage, SIGNAL(Refresh()), this, SLOT(refreshDir()));
+    connect(lpPage, SIGNAL(Search(QString)), this, SLOT(searchFile(QString)));
 }
 
 void MyMainWindow::setWidgetStyle()
@@ -109,27 +113,52 @@ void MyMainWindow::setThisStyle()
     setWindowFlags(Qt::FramelessWindowHint);
 }
 
-void MyMainWindow::startDownloadMission()
+void MyMainWindow::startDownloadMission(QString name)
 {
-    qDebug() << "start a new download mission" << endl;
+    qDebug() << "start a new download mission"
+             << name << endl;
 }
 
-void MyMainWindow::startUploadMission()
+void MyMainWindow::startUploadMission(QString name)
 {
-    qDebug() << "start a new upload mission" << endl;
+    qDebug() << "start a new upload mission"
+             << name << endl;
 }
 
-void MyMainWindow::shareFile()
+void MyMainWindow::shareFile(QString name)
 {
-    qDebug() << "share a file" << endl;
+    qDebug() << "share a file"
+             << name << endl;
 }
 
-void MyMainWindow::deleteFile()
+void MyMainWindow::deleteFile(QString name)
 {
-    qDebug() << "delete a file" << endl;
+    qDebug() << "delete a file"
+             << name << endl;
 }
 
-void MyMainWindow::makeNewDir()
+void MyMainWindow::makeNewDir(QString name)
 {
-    qDebug() << "create a director" << endl;
+    qDebug() << "create a director"
+             << name << endl;
+}
+
+void MyMainWindow::toUpperDir()
+{
+    qDebug() << "to upper director" << endl;
+}
+
+void MyMainWindow::toBeforeDir()
+{
+    qDebug() << "to before director" << endl;
+}
+
+void MyMainWindow::refreshDir()
+{
+    qDebug() << "refresh current director" << endl;
+}
+
+void MyMainWindow::searchFile(QString name)
+{
+    qDebug() << "search file " << name << endl;
 }

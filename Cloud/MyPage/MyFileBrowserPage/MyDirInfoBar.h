@@ -33,10 +33,10 @@ private:
 
     QPalette* lpPal;
 signals:
-    void ClickedBack();
-    void ClickedFront();
-    void ClickedFresh();
-    void ClickedSearch(QString);
+    void Back();
+    void Front();
+    void Fresh();
+    void Search(QString);
 private slots:
     void sendBack();
     void sendFront();

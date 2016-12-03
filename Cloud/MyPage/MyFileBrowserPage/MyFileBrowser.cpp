@@ -1,12 +1,27 @@
 #include "MyFileBrowser.h"
+#include <QFile>
 #include <QDebug>
 
 MyFileBrowser::MyFileBrowser(QWidget *parent) : QWidget(parent)
 {
     InitWidget();
     InitCounter();
-//    InitLayout();
     SetThisStyle();
+}
+
+bool MyFileBrowser::HasFileFocus()
+{
+    QList<QListWidgetItem*> list = lpListWidget->selectedItems();
+    if(list.size() == 0){
+        return false;
+    }
+    return true;
+}
+
+QString MyFileBrowser::GetSeletedFileName()
+{
+    QList<QListWidgetItem*> list = lpListWidget->selectedItems();
+    return list[0]->text();
 }
 
 void MyFileBrowser::InitWidget()
@@ -42,8 +57,18 @@ QWidget* MyFileBrowser::CreateWidget()
 
 void MyFileBrowser::AddFile()
 {
-    QPixmap iconP("image/fileBrowser/icon.png");
+    QPixmap iconP;
+    qDebug() << iconP.load("image/fileBrowser/director.png");
     QListWidgetItem* pItem = new QListWidgetItem(QIcon(iconP.scaled(QSize(80, 80))), QString("director%1").arg(fileNum++));
+    pItem->setSizeHint(QSize(100, 100));
+    lpListWidget->addItem(pItem);
+}
+
+void MyFileBrowser::AddDirector(QString name)
+{
+    QPixmap iconP;
+    qDebug() << iconP.load("image/fileBrowser/director.png");
+    QListWidgetItem* pItem = new QListWidgetItem(QIcon(iconP.scaled(QSize(80, 80))), name);
     pItem->setSizeHint(QSize(100, 100));
     lpListWidget->addItem(pItem);
 }
@@ -60,6 +85,5 @@ void MyFileBrowser::DeleteFile()
         int row = lpListWidget->row(temp);
         lpListWidget->takeItem(row);
         delete temp;
-//        lpListWidget->setFocusPolicy(Qt::NoFocus);
     }
 }

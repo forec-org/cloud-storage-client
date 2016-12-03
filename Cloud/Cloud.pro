@@ -16,30 +16,36 @@ SOURCES += main.cpp\
     MyMainWindow.cpp \
     MyTitleBar.cpp \
 #    MyNetFileBrowser/MyNetFileBrowser.cpp \
-    MyToolBar/MyToolBar.cpp \
     MyMenuBar/MyMenuBar.cpp \
     MyMenuBar/MyToolButton.cpp \
     MyMenuBar/MyUserLabel.cpp \
     MyPage/MyPage.cpp \
     MyPage/MyFileBrowserPage/MyFileBrowserPage.cpp \
-    MyPage/MyDownloadPage/MyDownloadPage.cpp \
-    MyPage/MyUploadPage/MyUploadPage.cpp \
     MyPage/MyFileBrowserPage/MyDirInfoBar.cpp \
-    MyPage/MyFileBrowserPage/MyFileBrowser.cpp
+    MyPage/MyFileBrowserPage/MyFileBrowser.cpp \
+    MyPage/MyFileBrowserPage/MyFBToolBar.cpp \
+    MyPage/MyFileBrowserPage/MyNewDirDialog.cpp \
+    MyPage/MyMissionPage/MyMissionInfoBar.cpp \
+    MyPage/MyMissionPage/MyMissionPage.cpp \
+    MyPage/MyMissionPage/MyMToolBar.cpp \
+    MyLogInDialog.cpp
 
 HEADERS  += \
     MyMainWindow.h \
     MyTitleBar.h \
-    MyToolBar/MyToolBar.h \
     MyMenuBar/MyMenuBar.h \
     MyMenuBar/MyToolButton.h \
     MyMenuBar/MyUserLabel.h \
     MyPage/MyPage.h \
     MyPage/MyFileBrowserPage/MyFileBrowserPage.h \
-    MyPage/MyDownloadPage/MyDownloadPage.h \
-    MyPage/MyUploadPage/MyUploadPage.h \
     MyPage/MyFileBrowserPage/MyDirInfoBar.h \
-    MyPage/MyFileBrowserPage/MyFileBrowser.h
+    MyPage/MyFileBrowserPage/MyFileBrowser.h \
+    MyPage/MyFileBrowserPage/MyFBToolBar.h \
+    MyPage/MyFileBrowserPage/MyNewDirDialog.h \
+    MyPage/MyMissionPage/MyMissionInfoBar.h \
+    MyPage/MyMissionPage/MyMissionPage.h \
+    MyPage/MyMissionPage/MyMToolBar.h \
+    MyLogInDialog.h
 
 FORMS    += mainwindow.ui
 

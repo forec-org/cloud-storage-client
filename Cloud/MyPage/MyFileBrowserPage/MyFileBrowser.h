@@ -14,6 +14,8 @@ private:
     const static int maxNumPerLine = 7;
 public:
     explicit MyFileBrowser(QWidget *parent = 0);
+    bool HasFileFocus();
+    QString GetSeletedFileName();
 
 private:
     void InitWidget();
@@ -29,6 +31,7 @@ signals:
 
 public slots:
     void AddFile();
+    void AddDirector(QString);
     void DeleteFile();
 };
 

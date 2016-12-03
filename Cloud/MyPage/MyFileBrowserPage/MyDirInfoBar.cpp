@@ -92,23 +92,23 @@ void MyDirInfoBar::ConnectSlot()
 
 void MyDirInfoBar::sendBack()
 {
-    emit ClickedBack();
+    emit Back();
 }
 
 void MyDirInfoBar::sendFront()
 {
-    emit ClickedFront();
+    emit Front();
 }
 
 void MyDirInfoBar::sendFresh()
 {
-    emit ClickedFresh();
+    emit Fresh();
 }
 
 void MyDirInfoBar::sendSearch()
 {
     if(!lpInputSearch->text().isEmpty()){
-        emit ClickedSearch(lpInputSearch->text());
+        emit Search(lpInputSearch->text());
     }
 }
 

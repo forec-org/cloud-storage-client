@@ -47,6 +47,13 @@ void MyPage::ConnectSlot()
     connect(lpFileBrowser, SIGNAL(Front()), this, SLOT(sendFrontSignal()));
     connect(lpFileBrowser, SIGNAL(Refresh()), this, SLOT(sendRefreshSignal()));
     connect(lpFileBrowser, SIGNAL(Search(QString)), this, SLOT(sendSearchSignal(QString)));
+
+    connect(lpFileBrowser, SIGNAL(Open(QString)), this, SLOT(sendEnterDirSignal(QString)));
+    connect(lpFileBrowser, SIGNAL(Rename(QString,QString)), this, SLOT(SendRenameSignal(QString,QString)));
+    connect(lpFileBrowser, SIGNAL(Property(QString)), this, SLOT(SendPropertySignal(QString)));
+    connect(lpFileBrowser, SIGNAL(Copy(QString)), this, SLOT(SendCopySignal(QString)));
+    connect(lpFileBrowser, SIGNAL(Cut(QString)), this, SLOT(SendCutSignal(QString)));
+    connect(lpFileBrowser, SIGNAL(Paste()), this, SLOT(SendPasteSignal()));
 }
 
 void MyPage::SetCurrentPage(int n)
@@ -87,6 +94,36 @@ void MyPage::sendRefreshSignal()
 void MyPage::sendSearchSignal(QString name)
 {
     emit Search(name);
+}
+
+void MyPage::sendEnterDirSignal(QString name)
+{
+    emit EnterDir(name);
+}
+
+void MyPage::SendRenameSignal(QString oldn, QString newn)
+{
+    emit Rename(oldn, newn);
+}
+
+void MyPage::SendPropertySignal(QString name)
+{
+    emit Property(name);
+}
+
+void MyPage::SendCopySignal(QString name)
+{
+    emit Copy(name);
+}
+
+void MyPage::SendCutSignal(QString name)
+{
+    emit Cut(name);
+}
+
+void MyPage::SendPasteSignal()
+{
+    emit Paste();
 }
 
 void MyPage::sendDeleteSignal(QString name)

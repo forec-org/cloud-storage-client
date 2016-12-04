@@ -84,15 +84,15 @@ void MyMToolBar::sendRS()
     if(isRun){
         isRun = false;
         lpResumeOrSuspendAll->setText("全部开始");
-        emit ClickedSuspendAll();
+        emit SuspendAll();
     }else{
         isRun = true;
         lpResumeOrSuspendAll->setText("全部暂停");
-        emit ClickedResumeAll();
+        emit ResumeAll();
     }
 }
 
 void MyMToolBar::sendC()
 {
-    emit ClickedCancelAll();
+    emit CancelAll();
 }

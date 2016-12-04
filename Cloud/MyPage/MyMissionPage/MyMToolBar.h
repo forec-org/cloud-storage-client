@@ -36,9 +36,9 @@ private:
 
     bool isRun;
 signals:
-    void ClickedResumeAll();
-    void ClickedSuspendAll();
-    void ClickedCancelAll();
+    void ResumeAll();
+    void SuspendAll();
+    void CancelAll();
 
 public slots:
     void SetSpeed(float);

@@ -48,6 +48,14 @@ signals:
     void Refresh();
     void Search(QString);
 
+    void Open(QString);
+    //oldname, newname
+    void Rename(QString, QString);
+    void Property(QString);
+    void Copy(QString);
+    void Cut(QString);
+    void Paste();
+
 private slots:
     //toolbar
     void showDialog();
@@ -55,13 +63,21 @@ private slots:
     void clickedDownload();
     void clickedShare();
     void clickedDelete();
-    void clickedAdd(QString);
+    void clickedAdd();
 
     //dirInfoBar
     void clickedBack();
     void clickedFront();
     void clickedRefresh();
     void clickedSearch(QString);
+
+    //filebrowser
+    void clickedOpen();
+    void clickedRename();
+    void clickedProperty();
+    void clickedPaste();
+    void clickedCopy();
+    void clickedCut();
 };
 
 #endif // MYFILEBROWSERPAGE_H

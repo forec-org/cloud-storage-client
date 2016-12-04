@@ -14,6 +14,11 @@ void MyMissionInfoBar::SetName(QString name)
     lpFileName->setText(name);
 }
 
+void MyMissionInfoBar::SetProgress(float progress)
+{
+    lpProgress->setValue(100 * progress);
+}
+
 void MyMissionInfoBar::InitWidgetDefault()
 {
     lpFileIcon = new QLabel(this);
@@ -28,7 +33,7 @@ void MyMissionInfoBar::InitInfo()
 {
     currentSize = 0;
     maxSize = 0;
-    progress = 0;
+//    progress = 0;
 }
 
 void MyMissionInfoBar::InitLayout()

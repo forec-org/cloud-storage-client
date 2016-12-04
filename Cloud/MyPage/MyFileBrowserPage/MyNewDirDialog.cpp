@@ -15,6 +15,7 @@ MyNewDirDialog::MyNewDirDialog(QWidget *parent)
 void MyNewDirDialog::Clean()
 {
     lpNameInput->clear();
+    setGeometry(100, 100, 300, 100);
 }
 
 void MyNewDirDialog::paintEvent(QPaintEvent *event)
@@ -26,6 +27,27 @@ void MyNewDirDialog::paintEvent(QPaintEvent *event)
     painter.setBrush(QColor(0, 0, 0));
     painter.drawRoundedRect(this->rect(), 10, 10);
     setMask(bitmap);
+}
+
+void MyNewDirDialog::mousePressEvent(QMouseEvent *e)
+{
+    last = e->globalPos();
+}
+
+void MyNewDirDialog::mouseMoveEvent(QMouseEvent *e)
+{
+    int dx = e->globalX() - last.x();
+    int dy = e->globalY() - last.y();
+    last = e->globalPos();
+    move(x()+dx,y()+dy);
+}
+
+void MyNewDirDialog::mouseReleaseEvent(QMouseEvent *e)
+{
+    int dx = e->globalX() - last.x();
+    int dy = e->globalY() - last.y();
+    move(x()+dx, y()+dy);
+    isMoving = false;
 }
 
 void MyNewDirDialog::InitWidget(){
@@ -86,7 +108,8 @@ void MyNewDirDialog::pressOk()
         lpFalse->setText("文件夹名中不能含有'+'");
         return;
     }
-    emit GetDirName(lpNameInput->text());
-    close();
+//    emit GetDirName(lpNameInput->text());
+    accept();
+//    close();
 }
 

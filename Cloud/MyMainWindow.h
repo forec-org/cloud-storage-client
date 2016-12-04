@@ -9,10 +9,9 @@
 #include <QLabel>
 
 class MyTitleBar;
-//class MyToolBar;
-//class MyToolButton;
 class MyMenuBar;
 class MyPage;
+class MyPasteErrorHint;
 
 class MyMainWindow : public QFrame
 {
@@ -20,8 +19,9 @@ class MyMainWindow : public QFrame
 public:
     MyMainWindow();
 
-    void paintEvent(QPaintEvent *event);
 protected:
+    void paintEvent(QPaintEvent *event);
+
     void mousePressEvent(QMouseEvent *);
 
     void mouseMoveEvent(QMouseEvent *);
@@ -49,9 +49,13 @@ private:
     //显示窗口: 文件浏览界面，下载管理界面， 上传管理界面
     MyPage* lpPage;
 
+    MyPasteErrorHint* lpError;
+
     QPoint last;
 
     bool isMoving;
+
+    int timerHandle;
 
 private slots:
     //调用controller的函数向服务器发送命令
@@ -65,6 +69,12 @@ private slots:
     void refreshDir();
     void searchFile(QString);
 
+    void enterDir(QString);
+    void renameFile(QString, QString);
+    void getProperty(QString);
+    void copy(QString);
+    void cut(QString);
+    void paste();
 };
 
 #endif // MYMAINWINDOW_H

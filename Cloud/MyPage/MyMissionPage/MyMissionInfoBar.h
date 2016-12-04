@@ -18,6 +18,7 @@ public:
                               QWidget *parent = 0);
 */
     void SetName(QString name);
+    void SetProgress(float);
 private:
     void InitWidgetDefault();
     void InitInfo();
@@ -39,12 +40,14 @@ private:
     //info
     unsigned long long currentSize;
     unsigned long long maxSize;
-    int progress;
 
+    bool isRunning;
 signals:
 
-public slots:
-
+private slots:
+    void pressedSuspendOrResume();
+    void pressedCancel();
+    void pressedOpenDir();
 };
 
 #endif // MYMISSIONINFOBAR_H

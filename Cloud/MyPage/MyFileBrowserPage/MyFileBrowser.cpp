@@ -1,12 +1,17 @@
 #include "MyFileBrowser.h"
 #include <QFile>
 #include <QDebug>
+#include "MyFileLabel/MyFileLabel.h"
+#include "MyFileListWidget.h"
 
 MyFileBrowser::MyFileBrowser(QWidget *parent) : QWidget(parent)
 {
+    isCopy = true;
     InitWidget();
     InitCounter();
     SetThisStyle();
+
+    ConnectSlot();
 }
 
 bool MyFileBrowser::HasFileFocus()
@@ -24,9 +29,19 @@ QString MyFileBrowser::GetSeletedFileName()
     return list[0]->text();
 }
 
+QString MyFileBrowser::GetCopyFileName()
+{
+    return copyFilename;
+}
+
+bool MyFileBrowser::IsCopy()
+{
+    return isCopy;
+}
+
 void MyFileBrowser::InitWidget()
 {
-    lpListWidget = new QListWidget(this);
+    lpListWidget = new MyFileListWidget(this);
     lpListWidget->setIconSize(QSize(100, 100));
     lpListWidget->setResizeMode(QListView::Adjust);
     lpListWidget->setViewMode(QListView::IconMode);
@@ -37,7 +52,6 @@ void MyFileBrowser::InitWidget()
 
 void MyFileBrowser::InitCounter()
 {
-//    line = row = fileNum = 0;
     fileNum = 0;
 }
 
@@ -45,23 +59,19 @@ void MyFileBrowser::SetThisStyle()
 {
     setMinimumSize(950, 410);
 }
-/*
-QWidget* MyFileBrowser::CreateWidget()
-{
-    QString name;
-    QLabel* temp = new QLabel(name);
-    temp->setFixedSize(100, 100);
-    temp->setStyleSheet("QLabel{background-color:rgb(200, 200, 255);}");
-    return temp;
-}*/
 
-void MyFileBrowser::AddFile()
+void MyFileBrowser::ConnectSlot()
 {
-    QPixmap iconP;
-    qDebug() << iconP.load("image/fileBrowser/director.png");
-    QListWidgetItem* pItem = new QListWidgetItem(QIcon(iconP.scaled(QSize(80, 80))), QString("director%1").arg(fileNum++));
-    pItem->setSizeHint(QSize(100, 100));
-    lpListWidget->addItem(pItem);
+    connect(lpListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(enterDir(QListWidgetItem*)));
+
+    connect(lpListWidget, SIGNAL(Open()), this, SLOT(clickedOpen()));
+    connect(lpListWidget, SIGNAL(Delete()), this, SLOT(clickedDelete()));
+    connect(lpListWidget, SIGNAL(Copy()), this, SLOT(clickedCopy()));
+    connect(lpListWidget, SIGNAL(Cut()), this, SLOT(clickedCut()));
+    connect(lpListWidget, SIGNAL(Rename()), this, SLOT(clickedRename()));
+    connect(lpListWidget, SIGNAL(Property()), this, SLOT(clickedProperty()));
+    connect(lpListWidget, SIGNAL(Paste()), this, SLOT(clickedPaste()));
+    connect(lpListWidget, SIGNAL(NewDir()), this, SLOT(clickedNewDir()));
 }
 
 void MyFileBrowser::AddDirector(QString name)
@@ -87,3 +97,53 @@ void MyFileBrowser::DeleteFile()
         delete temp;
     }
 }
+
+void MyFileBrowser::enterDir(QListWidgetItem *t)
+{
+    emit Open();
+}
+
+void MyFileBrowser::clickedOpen()
+{
+    emit Open();
+}
+
+void MyFileBrowser::clickedDelete()
+{
+    emit Delete();
+}
+
+void MyFileBrowser::clickedCopy()
+{
+//    copyFilename = GetSeletedFileName();
+//   isCopy = true;
+    emit Copy();
+}
+
+void MyFileBrowser::clickedCut()
+{
+//    copyFilename = GetSeletedFileName();
+//    isCopy = false;
+    emit Cut();
+}
+
+void MyFileBrowser::clickedRename()
+{
+    emit Rename();
+}
+
+void MyFileBrowser::clickedProperty()
+{
+    emit Property();
+}
+
+void MyFileBrowser::clickedPaste()
+{
+    emit Paste();
+}
+
+void MyFileBrowser::clickedNewDir()
+{
+    emit NewDir();
+}
+

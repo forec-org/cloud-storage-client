@@ -41,6 +41,13 @@ signals:
     void Refresh();
     void Search(QString);
 
+    void EnterDir(QString);
+    void Rename(QString, QString);
+    void Property(QString);
+    void Copy(QString);
+    void Cut(QString);
+    void Paste();
+
 public slots:
     void SetCurrentPage(int);
 
@@ -55,6 +62,13 @@ private slots:
     void sendFrontSignal();
     void sendRefreshSignal();
     void sendSearchSignal(QString);
+
+    void sendEnterDirSignal(QString);
+    void SendRenameSignal(QString, QString);
+    void SendPropertySignal(QString);
+    void SendCopySignal(QString);
+    void SendCutSignal(QString);
+    void SendPasteSignal();
 };
 
 #endif // MYPAGE_H

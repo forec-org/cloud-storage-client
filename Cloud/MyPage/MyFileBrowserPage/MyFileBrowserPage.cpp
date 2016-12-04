@@ -3,6 +3,7 @@
 #include "MyDirInfoBar.h"
 #include "MyFileBrowser.h"
 #include "MyNewDirDialog.h"
+#include "MyDeleteDialog.h"
 #include <QFileDialog>
 #include <QDebug>
 
@@ -49,16 +50,24 @@ void MyFileBrowserPage::ConnectSlot()
     connect(lpToolBar, SIGNAL(Download()), this, SLOT(clickedDownload()));
     connect(lpToolBar, SIGNAL(Share()), this, SLOT(clickedShare()));
     connect(lpToolBar, SIGNAL(Delete()), this, SLOT(clickedDelete()));
-    connect(lpToolBar, SIGNAL(NewDir()), this, SLOT(showDialog()));
-    connect(lpDialog, SIGNAL(GetDirName(QString)), this, SLOT(clickedAdd(QString)));
+    connect(lpToolBar, SIGNAL(NewDir()), this, SLOT(clickedAdd()));
 
     connect(lpDirBar, SIGNAL(Back()), this, SLOT(clickedBack()));
     connect(lpDirBar, SIGNAL(Front()), this, SLOT(clickedFront()));
     connect(lpDirBar, SIGNAL(Fresh()), this, SLOT(clickedRefresh()));
     connect(lpDirBar, SIGNAL(Search(QString)), this, SLOT(clickedSearch(QString)));
 
+    connect(lpBrowser, SIGNAL(Open()), this, SLOT(clickedOpen()));
+    connect(lpBrowser, SIGNAL(Delete()), this, SLOT(clickedDelete()));
+    connect(lpBrowser, SIGNAL(Rename()), this, SLOT(clickedRename()));
+    connect(lpBrowser, SIGNAL(Property()), this, SLOT(clickedProperty()));
+    connect(lpBrowser, SIGNAL(Copy()), this, SLOT(clickedCopy()));
+    connect(lpBrowser, SIGNAL(Cut()), this, SLOT(clickedCut()));
+    connect(lpBrowser, SIGNAL(Paste()), this, SLOT(clickedPaste()));
+    connect(lpBrowser, SIGNAL(NewDir()), this, SLOT(clickedAdd()));
+
     //测试功能用     --日后删除
-        connect(lpDialog, SIGNAL(GetDirName(QString)), lpBrowser, SLOT(AddDirector(QString)));
+//        connect(lpDialog, SIGNAL(GetDirName(QString)), lpBrowser, SLOT(AddDirector(QString)));
         connect(lpToolBar, SIGNAL(Delete()), lpBrowser, SLOT(DeleteFile()));
 }
 
@@ -113,12 +122,21 @@ void MyFileBrowserPage::clickedDelete()
         return ;
     }
     QString name = lpBrowser->GetSeletedFileName();
-    emit Delete(name);
+    MyDeleteDialog* dialog = new MyDeleteDialog(this);
+    dialog->SetHint(name);
+    if(dialog->exec() == QDialog::Accepted){
+        emit Delete(name);
+    }
+    delete dialog;
 }
 
-void MyFileBrowserPage::clickedAdd(QString name)
+void MyFileBrowserPage::clickedAdd()
 {
-    emit NewDir(name);
+    lpDialog->Clean();
+    if(lpDialog->exec() == QDialog::Accepted){
+        lpBrowser->AddDirector(lpDialog->GetContent());
+        emit NewDir(lpDialog->GetContent());
+    }
 }
 
 void MyFileBrowserPage::clickedBack()
@@ -141,3 +159,39 @@ void MyFileBrowserPage::clickedSearch(QString name)
     emit Search(name);
 }
 
+void MyFileBrowserPage::clickedOpen()
+{
+    QString name = lpBrowser->GetSeletedFileName();
+    emit Open(name);
+}
+
+void MyFileBrowserPage::clickedRename()
+{
+    MyNewDirDialog* renamedialog = new MyNewDirDialog(this);
+    renamedialog->SetHint("输入新名字");
+    renamedialog->SetEditText(lpBrowser->GetSeletedFileName());
+    if(renamedialog->exec() == QDialog::Accepted){
+        emit Rename(lpBrowser->GetSeletedFileName(), lpDialog->GetContent());
+    }
+}
+
+void MyFileBrowserPage::clickedProperty()
+{
+    QString name = lpBrowser->GetSeletedFileName();
+    emit Property(name);
+}
+
+void MyFileBrowserPage::clickedPaste()
+{
+    emit Paste();
+}
+
+void MyFileBrowserPage::clickedCopy()
+{
+    emit Copy(lpBrowser->GetSeletedFileName());
+}
+
+void MyFileBrowserPage::clickedCut()
+{
+    emit Cut(lpBrowser->GetSeletedFileName());
+}

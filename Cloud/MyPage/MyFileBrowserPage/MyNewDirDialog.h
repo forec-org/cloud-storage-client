@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QMouseEvent>
 
 class MyNewDirDialog : public QDialog
 {
@@ -14,8 +15,24 @@ class MyNewDirDialog : public QDialog
 public:
     MyNewDirDialog(QWidget* parent = 0);
     void Clean();
+    void SetHint(QString txt){
+        lpHint->setText(txt);
+    }
+    void SetEditText(QString txt){
+        lpNameInput->setText(txt);
+    }
+    QString GetContent(){
+        return lpNameInput->text();
+    }
+
 protected:
     void paintEvent(QPaintEvent* event);
+
+    void mousePressEvent(QMouseEvent *);
+
+    void mouseMoveEvent(QMouseEvent *);
+
+    void mouseReleaseEvent(QMouseEvent *);
 
 private:
     void InitWidget();
@@ -33,6 +50,10 @@ private:
 
     QVBoxLayout* lpMainLayout;
     QHBoxLayout* lpSubLayout;
+
+    QPoint last;
+
+    bool isMoving;
 
 signals:
     void GetDirName(QString);

@@ -28,7 +28,10 @@ SOURCES += main.cpp\
     MyPage/MyMissionPage/MyMissionInfoBar.cpp \
     MyPage/MyMissionPage/MyMissionPage.cpp \
     MyPage/MyMissionPage/MyMToolBar.cpp \
-    MyLogInDialog.cpp
+    MyLogInDialog.cpp \
+    MyPage/MyFileBrowserPage/MyFileListWidget.cpp \
+    MyPage/MyFileBrowserPage/MyDeleteDialog.cpp \
+    MyPasteErrorHint.cpp
 
 HEADERS  += \
     MyMainWindow.h \
@@ -45,7 +48,10 @@ HEADERS  += \
     MyPage/MyMissionPage/MyMissionInfoBar.h \
     MyPage/MyMissionPage/MyMissionPage.h \
     MyPage/MyMissionPage/MyMToolBar.h \
-    MyLogInDialog.h
+    MyLogInDialog.h \
+    MyPage/MyFileBrowserPage/MyFileListWidget.h \
+    MyPage/MyFileBrowserPage/MyDeleteDialog.h \
+    MyPasteErrorHint.h
 
 FORMS    += mainwindow.ui
 

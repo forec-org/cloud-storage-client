@@ -1,14 +1,15 @@
 #include "MyMainWindow.h"
 #include "MyTitleBar.h"
-//#include "MyToolBar/MyToolBar.h"
 #include "MyMenuBar/MyMenuBar.h"
 #include "MyPage/MyPage.h"
+#include "MyPasteErrorHint.h"
 
-//#include "MyToolButton.h"
+#include <QTimer>
 #include <QPainter>
 #include <QBitmap>
 #include <fstream>
 #include <QDebug>
+#include <QDialog>
 
 MyMainWindow::MyMainWindow()
     :QFrame()
@@ -69,6 +70,7 @@ void MyMainWindow::InitWidget()
     lpTitleBar = new MyTitleBar(this);
     lpMenuBar = new MyMenuBar(this);
     lpPage = new MyPage(this);
+    lpError = new MyPasteErrorHint(this);
 }
 
 void MyMainWindow::InitLayout()
@@ -96,6 +98,13 @@ void MyMainWindow::InitSlot()
     connect(lpPage, SIGNAL(Front()), this, SLOT(toBeforeDir()));
     connect(lpPage, SIGNAL(Refresh()), this, SLOT(refreshDir()));
     connect(lpPage, SIGNAL(Search(QString)), this, SLOT(searchFile(QString)));
+
+    connect(lpPage, SIGNAL(EnterDir(QString)), this, SLOT(enterDir(QString)));
+    connect(lpPage, SIGNAL(Rename(QString,QString)), this, SLOT(renameFile(QString,QString)));
+    connect(lpPage, SIGNAL(Property(QString)), this, SLOT(getProperty(QString)));
+    connect(lpPage, SIGNAL(Copy(QString)), this, SLOT(copy(QString)));
+    connect(lpPage, SIGNAL(Cut(QString)), this, SLOT(cut(QString)));
+    connect(lpPage, SIGNAL(Paste()), this, SLOT(paste()));
 }
 
 void MyMainWindow::setWidgetStyle()
@@ -162,3 +171,37 @@ void MyMainWindow::searchFile(QString name)
 {
     qDebug() << "search file " << name << endl;
 }
+
+void MyMainWindow::enterDir(QString name)
+{
+    qDebug() << "enter: " << name << endl;
+}
+
+void MyMainWindow::renameFile(QString oldn, QString newn)
+{
+    qDebug() << "rename " << oldn
+             << " to new name: " << newn << endl;
+}
+
+void MyMainWindow::getProperty(QString name)
+{
+    qDebug() << "get file " << name << "'s property" << endl;
+}
+
+void MyMainWindow::copy(QString name)
+{
+    qDebug() << "copy " << name << endl;
+}
+
+void MyMainWindow::cut(QString name)
+{
+    qDebug() << "Cut " << name << endl;
+}
+
+void MyMainWindow::paste()
+{
+    lpError->show();
+    QTimer::singleShot(2000, lpError, SLOT(hide()));
+    qDebug() << "paste " << endl;
+}
+

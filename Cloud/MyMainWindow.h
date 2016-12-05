@@ -75,6 +75,16 @@ private slots:
     void copy(QString);
     void cut(QString);
     void paste();
+
+    void suspendD(int);
+    void resumeD(int);
+    void cancelD(int);
+    void openDirD(int);
+
+    void suspendU(int);
+    void resumeU(int);
+    void cancelU(int);
+    void openDirU(int);
 };
 
 #endif // MYMAINWINDOW_H

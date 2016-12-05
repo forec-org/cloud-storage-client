@@ -7,6 +7,7 @@ MyMissionInfoBar::MyMissionInfoBar(QWidget *parent) : QWidget(parent)
     InitLayout();
     SetThisStyle();
     SetWidgetStyle();
+    ConnectSlot();
 }
 
 void MyMissionInfoBar::SetName(QString name)
@@ -17,6 +18,28 @@ void MyMissionInfoBar::SetName(QString name)
 void MyMissionInfoBar::SetProgress(float progress)
 {
     lpProgress->setValue(100 * progress);
+}
+
+void MyMissionInfoBar::SetRunning(bool r)
+{
+    isRunning = r;
+    if(isRunning){
+        lpResumeOrSuspend->setText("暂停");
+    }else{
+        lpResumeOrSuspend->setText("继续");
+    }
+}
+
+void MyMissionInfoBar::SetNum(int n)
+{
+    num = n;
+}
+
+void MyMissionInfoBar::ConnectSlot()
+{
+    connect(lpResumeOrSuspend, SIGNAL(clicked(bool)), this, SLOT(pressedSuspendOrResume()));
+    connect(lpCancel, SIGNAL(clicked(bool)), this, SLOT(pressedCancel()));
+    connect(lpDir, SIGNAL(clicked(bool)), this, SLOT(pressedOpenDir()));
 }
 
 void MyMissionInfoBar::InitWidgetDefault()
@@ -31,8 +54,9 @@ void MyMissionInfoBar::InitWidgetDefault()
 
 void MyMissionInfoBar::InitInfo()
 {
-    currentSize = 0;
-    maxSize = 0;
+    isRunning = true;
+//    currentSize = 0;
+//    maxSize = 0;
 //    progress = 0;
 }
 
@@ -86,3 +110,23 @@ void MyMissionInfoBar::SetWidgetStyle()
                   "color: rgb(100, 100, 100);}"
                   "QPushButton:hover{background-color:rgb(230, 230, 230);}");
 }
+
+void MyMissionInfoBar::pressedSuspendOrResume()
+{
+    if(isRunning){
+        emit Suspend(num);
+        return;
+    }
+    emit Resume(num);
+}
+
+void MyMissionInfoBar::pressedCancel()
+{
+    emit Cancel(num);
+}
+
+void MyMissionInfoBar::pressedOpenDir()
+{
+    emit OpenDir(num);
+}
+

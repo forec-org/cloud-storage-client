@@ -54,6 +54,17 @@ void MyPage::ConnectSlot()
     connect(lpFileBrowser, SIGNAL(Copy(QString)), this, SLOT(SendCopySignal(QString)));
     connect(lpFileBrowser, SIGNAL(Cut(QString)), this, SLOT(SendCutSignal(QString)));
     connect(lpFileBrowser, SIGNAL(Paste()), this, SLOT(SendPasteSignal()));
+
+    connect(lpDownload, SIGNAL(Resume(int)), this, SLOT(sendResumeD(int)));
+    connect(lpDownload, SIGNAL(Suspend(int)), this, SLOT(sendSuspendD(int)));
+    connect(lpDownload, SIGNAL(Cancel(int)), this, SLOT(sendCancelD(int)));
+    connect(lpDownload, SIGNAL(OpenDir(int)), this, SLOT(sendOpenDirD(int)));
+
+    connect(lpUpload, SIGNAL(Resume(int)), this, SLOT(sendResumeU(int)));
+    connect(lpUpload, SIGNAL(Suspend(int)), this, SLOT(sendSuspendU(int)));
+    connect(lpUpload, SIGNAL(Cancel(int)), this, SLOT(sendCancelU(int)));
+    connect(lpUpload, SIGNAL(OpenDir(int)), this, SLOT(sendOpenDirU(int)));
+
 }
 
 void MyPage::SetCurrentPage(int n)
@@ -124,6 +135,46 @@ void MyPage::SendCutSignal(QString name)
 void MyPage::SendPasteSignal()
 {
     emit Paste();
+}
+
+void MyPage::sendSuspendD(int n)
+{
+    emit SuspendD(n);
+}
+
+void MyPage::sendResumeD(int n)
+{
+    emit ResumeD(n);
+}
+
+void MyPage::sendCancelD(int n)
+{
+    emit CancelD(n);
+}
+
+void MyPage::sendOpenDirD(int n)
+{
+    emit OpenDirD(n);
+}
+
+void MyPage::sendSuspendU(int n)
+{
+    emit SuspendU(n);
+}
+
+void MyPage::sendResumeU(int n)
+{
+    emit ResumeU(n);
+}
+
+void MyPage::sendCancelU(int n)
+{
+    emit CancelU(n);
+}
+
+void MyPage::sendOpenDirU(int n)
+{
+    emit OpenDirU(n);
 }
 
 void MyPage::sendDeleteSignal(QString name)

@@ -1,12 +1,17 @@
 #include "MyMissionPage.h"
 #include "MyMissionInfoBar.h"
 #include "MyMToolBar.h"
+#include <QDebug>
 
 MyMissionPage::MyMissionPage(QWidget *parent) : QWidget(parent)
 {
     InitWidget();
     InitLayout();
     SetThisStyle();
+
+    connect(lpToolBar, SIGNAL(SuspendAll()), this, SLOT(pressedSuspendAll()));
+    connect(lpToolBar, SIGNAL(ResumeAll()), this, SLOT(pressedResumeAll()));
+    connect(lpToolBar, SIGNAL(CancelAll()), this, SLOT(pressedCancelAll()));
 }
 
 void MyMissionPage::InitWidget()
@@ -18,6 +23,8 @@ void MyMissionPage::InitWidget()
     lpMissionList->setMovement(QListView::Static);
     lpMissionList->setSpacing(1);
     lpMissionList->setGeometry(0, 40, 950, 450);
+
+//    lpList = new QList<MyMissionInfoBar*>();
 }
 
 void MyMissionPage::InitLayout()
@@ -48,4 +55,52 @@ void MyMissionPage::AddMission(QString name)
     lpMissionList->setItemWidget(item, temp);
     item->setSizeHint (QSize(temp->rect().width(),temp->rect().height()));
     temp->SetName(name);
+    temp->SetRunning(true);
+    temp->SetNum(lpMissionList->count() - 1);
+    connect(temp, SIGNAL(Suspend(int)), this, SLOT(pressedSuspend(int)));
+    connect(temp, SIGNAL(Resume(int)), this, SLOT(pressedResume(int)));
+    connect(temp, SIGNAL(Cancel(int)), this, SLOT(pressedCancel(int)));
+    connect(temp, SIGNAL(OpenDir(int)), this, SLOT(pressedOpenDir(int)));
+}
+
+void MyMissionPage::pressedSuspend(int n)
+{
+    emit Suspend(n);
+//    qDebug() << "任务" << n << "暂停" << endl;
+}
+
+void MyMissionPage::pressedResume(int n)
+{
+    emit Resume(n);
+}
+
+void MyMissionPage::pressedCancel(int n)
+{
+    emit Cancel(n);
+}
+
+void MyMissionPage::pressedOpenDir(int n)
+{
+    emit OpenDir(n);
+}
+
+void MyMissionPage::pressedSuspendAll()
+{
+    for(int i = 0; i < lpMissionList->count(); ++i){
+        emit Suspend(i);
+    }
+}
+
+void MyMissionPage::pressedResumeAll()
+{
+    for(int i = 0; i < lpMissionList->count(); ++i){
+        emit Resume(i);
+    }
+}
+
+void MyMissionPage::pressedCancelAll()
+{
+    for(int i = 0; i < lpMissionList->count(); ++i){
+        emit Cancel(i);
+    }
 }

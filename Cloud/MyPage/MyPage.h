@@ -48,6 +48,15 @@ signals:
     void Cut(QString);
     void Paste();
 
+    void SuspendD(int);
+    void ResumeD(int);
+    void CancelD(int);
+    void OpenDirD(int);
+    void SuspendU(int);
+    void ResumeU(int);
+    void CancelU(int);
+    void OpenDirU(int);
+
 public slots:
     void SetCurrentPage(int);
 
@@ -69,6 +78,17 @@ private slots:
     void SendCopySignal(QString);
     void SendCutSignal(QString);
     void SendPasteSignal();
+
+    //接收来自传输任务页面的信号，并传递给主窗口
+    void sendSuspendD(int);
+    void sendResumeD(int);
+    void sendCancelD(int);
+    void sendOpenDirD(int);
+
+    void sendSuspendU(int);
+    void sendResumeU(int);
+    void sendCancelU(int);
+    void sendOpenDirU(int);
 };
 
 #endif // MYPAGE_H

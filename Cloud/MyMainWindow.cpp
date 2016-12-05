@@ -10,6 +10,8 @@
 #include <fstream>
 #include <QDebug>
 #include <QDialog>
+#include <QProcess>
+#include <QDir>
 
 MyMainWindow::MyMainWindow()
     :QFrame()
@@ -105,6 +107,15 @@ void MyMainWindow::InitSlot()
     connect(lpPage, SIGNAL(Copy(QString)), this, SLOT(copy(QString)));
     connect(lpPage, SIGNAL(Cut(QString)), this, SLOT(cut(QString)));
     connect(lpPage, SIGNAL(Paste()), this, SLOT(paste()));
+
+    connect(lpPage, SIGNAL(SuspendD(int)), this, SLOT(suspendD(int)));
+    connect(lpPage, SIGNAL(ResumeD(int)), this, SLOT(resumeD(int)));
+    connect(lpPage, SIGNAL(CancelD(int)), this, SLOT(cancelD(int)));
+    connect(lpPage, SIGNAL(OpenDirD(int)), this, SLOT(openDirD(int)));
+    connect(lpPage, SIGNAL(SuspendU(int)), this, SLOT(suspendU(int)));
+    connect(lpPage, SIGNAL(ResumeU(int)), this, SLOT(resumeU(int)));
+    connect(lpPage, SIGNAL(CancelU(int)), this, SLOT(cancelU(int)));
+    connect(lpPage, SIGNAL(OpenDirU(int)), this, SLOT(openDirU(int)));
 }
 
 void MyMainWindow::setWidgetStyle()
@@ -205,3 +216,46 @@ void MyMainWindow::paste()
     qDebug() << "paste " << endl;
 }
 
+void MyMainWindow::suspendD(int n)
+{
+    qDebug() << "suspend download thread " << n << endl;
+}
+
+void MyMainWindow::resumeD(int n)
+{
+    qDebug() << "resume download thread " << n << endl;
+}
+
+void MyMainWindow::cancelD(int n)
+{
+    qDebug() << "cancel download thread " << n << endl;
+}
+
+void MyMainWindow::openDirD(int n)
+{
+    qDebug() << "open director d" << n << endl;
+}
+
+void MyMainWindow::suspendU(int n)
+{
+    qDebug() << "suspend upload thread " << n << endl;
+}
+
+void MyMainWindow::resumeU(int n)
+{
+    qDebug() << "resume upload thread " << n << endl;
+}
+
+void MyMainWindow::cancelU(int n)
+{
+    qDebug() << "cancel upload thread " << n << endl;
+}
+
+void MyMainWindow::openDirU(int n)
+{
+//    QString path=QDir::currentPath();
+//    path.replace("/", "\\");
+    QString path = "D:\\";
+    QProcess::startDetached("explorer "+path);
+    qDebug() << "open director u" << n << endl;
+}

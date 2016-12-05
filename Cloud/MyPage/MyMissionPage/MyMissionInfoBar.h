@@ -19,6 +19,9 @@ public:
 */
     void SetName(QString name);
     void SetProgress(float);
+    void SetRunning(bool);
+    void SetNum(int);
+    void ConnectSlot();
 private:
     void InitWidgetDefault();
     void InitInfo();
@@ -38,12 +41,15 @@ private:
     QHBoxLayout* lpMainLayout;
 
     //info
-    unsigned long long currentSize;
-    unsigned long long maxSize;
-
+//    unsigned long long currentSize;
+//    unsigned long long maxSize;
+    int num;
     bool isRunning;
 signals:
-
+    void Suspend(int);
+    void Resume(int);
+    void Cancel(int);
+    void OpenDir(int);
 private slots:
     void pressedSuspendOrResume();
     void pressedCancel();
